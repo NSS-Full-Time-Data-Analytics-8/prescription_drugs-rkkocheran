@@ -60,6 +60,33 @@ LIMIT 1;
 
     c. **Challenge Question:** Are there any specialties that appear in the prescriber table that have no associated prescriptions in the prescription table?
 
+    /* Q2c
+       **Challenge Question:** Are there any specialties that appear in the prescriber table
+       that have no associated prescriptions in the prescription table?
+       ANSWER: Yes, there are 15 specialties that have not prescribed anything. Namely,
+       "Ambulatory Surgical Center"
+       "Chiropractic"
+       "Contractor"
+       "Developmental Therapist"
+       "Hospital"
+       "Licensed Practical Nurse"
+       "Marriage & Family Therapist"
+       "Medical Genetics"
+       "Midwife"
+       "Occupational Therapist in Private Practice"
+       "Physical Therapist in Private Practice"
+       "Physical Therapy Assistant"
+       "Radiology Practitioner Assistant"
+       "Specialist/Technologist, Other"
+       "Undefined Physician type" */
+    SELECT DISTINCT specialty_description
+    FROM prescriber
+    WHERE specialty_description NOT IN
+        (SELECT DISTINCT specialty_description
+         FROM prescription AS p1
+         INNER JOIN prescriber AS p2 USING (npi))
+    ORDER BY specialty_description;
+    
     d. **Difficult Bonus:** *Do not attempt until you have solved all other problems!* For each specialty, report the percentage of total claims by that specialty which are for opioids. Which specialties have a high percentage of opioids?
 
 3. a. Which drug (generic_name) had the highest total drug cost?
